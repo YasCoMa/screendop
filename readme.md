@@ -24,39 +24,43 @@ The disease outcome prediction pipeline offers two strategies for this task:
 ### Data preparation - File ````data_preparation_for_pipeline.py```` :
 
 #### Files decompression
-    - Decompress data_preparation/lekaemia.tar.xz
-    - Decompress data_preparation/ovarian/GSE140082_data.tar.xz
-        - Put the decompressed file GSE140082_series_matrix.txt in data_preparation/ovarian/
+
+- Decompress data_preparation/lekaemia.tar.xz
+- Decompress data_preparation/ovarian/GSE140082_data.tar.xz
+    - Put the decompressed file GSE140082_series_matrix.txt in data_preparation/ovarian/
     
 #### Pipeline parameters
-	- __-rt__ or __--running_type__ <br>
-		Use to prepare data for the desired scenario: <br>
-		1 - Run with Leukaemia data <br>
-		2 - Run with Ovarian cancer data
+
+- __-rt__ or __--running_type__ <br>
+	Use to prepare data for the desired scenario: <br>
+	1 - Run with Leukaemia data <br>
+	2 - Run with Ovarian cancer data
 
 #### Running modes examples
-	1. Run for Leukaemia data: <br>
-	````python3 data_preparation_for_pipeline.py -rt 1 ````
 
-		In this case, you must have [R](https://www.r-project.org/) installed and also the library [limma](https://bioconductor.org/packages/release/bioc/html/limma.html), it is used to determine DEGs from microarray data. For this dataset, the files are already prepared in the folder.
+1. Run for Leukaemia data: <br>
+````python3 data_preparation_for_pipeline.py -rt 1 ```` 
 
-	2. Run for Ovarian cancer data: <br>
-	````python3 data_preparation_for_pipeline.py -rt 2 ````
+In this case, you must have [R](https://www.r-project.org/) installed and also the library [limma](https://bioconductor.org/packages/release/bioc/html/limma.html), it is used to determine DEGs from microarray data. For this dataset, the files are already prepared in the folder.
 
-		In this case, you must have [R](https://www.r-project.org/) installed and also the library [DESeq](https://bioconductor.org/packages/release/bioc/html/DESeq.html), because this scenario treats next generation sequencing data
+2. Run for Ovarian cancer data: <br>
+````python3 data_preparation_for_pipeline.py -rt 2 ```` 
+
+In this case, you must have [R](https://www.r-project.org/) installed and also the library [DESeq](https://bioconductor.org/packages/release/bioc/html/DESeq.html), because this scenario treats next generation sequencing data
 
 ### Disease outcome prediction execution - File ````main.py````:
 
 #### Pipeline parameters
-	- __-rt__ or __--running_step__ <br>
-		Use to prepare data for the desired scenario: <br>
-		1 - Run graph kernel method <br>
-		2 - Run gsea based pathway scores method
 
-	- __-cf__ or __--configuration_file__ <br>
-		File with the expression values for the genes by sample/patient in tsv format<br>
-		
-		Example of this file: config.json
+- __-rt__ or __--running_step__ <br>
+	Use to prepare data for the desired scenario: <br>
+	1 - Run graph kernel method <br>
+	2 - Run gsea based pathway scores method
+
+- __-cf__ or __--configuration_file__ <br>
+	File with the expression values for the genes by sample/patient in tsv format<br>
+	
+	Example of this file: config.json
 		
 #### Input configuration file
 
@@ -73,11 +77,11 @@ The disease outcome prediction pipeline offers two strategies for this task:
     - **flag_balance**: Flag to indicate whether the user wants to balance the samples in each outcome class, by SMOTE oversampling. Values may be false or true. Default value is false.
 
 #### Running modes examples
-	1. Running disease outcome prediction by graph kernel method: <br>
-		````python3 main.py -rt 1 -cf config.json````
+1. Running disease outcome prediction by graph kernel method: <br>
+	````python3 main.py -rt 1 -cf config.json````
 
-	2. Running disease outcome prediction by gsea enriched network method: <br>
-		````python3 main.py -rt 2 -cf config.json````
+2. Running disease outcome prediction by gsea enriched network method: <br>
+	````python3 main.py -rt 2 -cf config.json````
 
 ## Reference
 
