@@ -1,6 +1,6 @@
 # ScreenDOP - Screening of strategies for disease outcome prediction
 
-Pipeline that performs a screening of outcome disease prediction evaluations following two strategies, one of them combines protein interactions data with normalized table of genes by samples of a gene expression experiment for some genetic disease in order to predict the outcome of this disease for the patients (each sample). The other strategy uses gene set enrichment with kegg pathways to build the features that will enter the classifier. In both strategies, it is possible to set up configurations to test the better parameter combination. The pipeline receives a json configuration file allowing the test of many experiments by execution. Here, we present examples for two scenarios: Leukaemia and Ovarian cancer datasets.
+Pipeline that performs a screening of disease outcome prediction evaluations following two strategies, one of them combines protein interactions data with normalized table of genes by samples of a gene expression experiment for some genetic disease in order to predict the outcome of this disease for the patients (each sample). The other strategy uses gene set enrichment with kegg pathways to build the features that will enter the classifier. In both strategies, it is possible to set up configurations to test the better parameter combination. The pipeline receives a json configuration file allowing the test of many experiments by execution. Here, we present examples for two scenarios: Leukaemia and Ovarian cancer datasets.
 
 ## Summary
 

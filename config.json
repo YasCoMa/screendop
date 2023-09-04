@@ -1,0 +1,46 @@
+{ 
+"experiments":
+    [
+        {
+        "folder": "./screening_leukemia",
+        "mask_expression_table": "mask_expression_table.tsv",
+        "raw_expression_table": "raw_expression_table.tsv",
+        "labels_file": "patient_labels.tsv",
+        "identifier": "leukemia_nodeEdge_screen",
+        "deg_cutoff_up": 1,
+        "deg_cutoff_down": -1,
+        "nodes_enrichment": ["label", "weight", "all"],
+        "edges_enrichment": ["label", "weight", "all"],
+        "flag_balance": true
+        },
+        {
+        "folder": "./screening_ovarian",
+        "mask_expression_table": "mask_expression_table.tsv",
+        "raw_expression_table": "raw_expression_table.tsv",
+        "labels_file": "patient_labels.tsv",
+        "identifier": "ovarian_nodeEdge_screen",
+        "deg_cutoff_up": 1,
+        "deg_cutoff_down": -1,
+        "nodes_enrichment": ["label", "weight", "all"],
+        "edges_enrichment": ["label", "weight", "all"],
+        "flag_balance": true
+        },
+        {
+        "folder": "./screening_leukemia",
+        "mask_expression_table": "mask_expression_table.tsv",
+        "raw_expression_table": "raw_expression_table.tsv",
+        "labels_file": "patient_labels.tsv",
+        "identifier": "leukemia_no_balance",
+        "flag_balance": false
+        },
+        {
+        "folder": "./screening_ovarian",
+        "mask_expression_table": "mask_expression_table.tsv",
+        "raw_expression_table": "raw_expression_table.tsv",
+        "labels_file": "patient_labels.tsv",
+        "identifier": "ovarian_no_balance",
+        "flag_balance": false
+        }
+    ]
+}
+
