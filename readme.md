@@ -22,18 +22,19 @@ The disease outcome prediction pipeline offers two strategies for this task:
 6. Setup an environment variable named "path_workflow_screendop" with the full path to this workflow folder
 
 ### Data preparation - File ````data_preparation_for_pipeline.py```` :
-* Files decompression
+
+#### Files decompression
     - Decompress data_preparation/lekaemia.tar.xz
     - Decompress data_preparation/ovarian/GSE140082_data.tar.xz
         - Put the decompressed file GSE140082_series_matrix.txt in data_preparation/ovarian/
     
-* Pipeline parameters:
+#### Pipeline parameters
 	- __-rt__ or __--running_type__ <br>
 		Use to prepare data for the desired scenario: <br>
 		1 - Run with Leukaemia data <br>
 		2 - Run with Ovarian cancer data
 
-* Running modes examples:
+#### Running modes examples
 	1. Run for Leukaemia data: <br>
 	````python3 data_preparation_for_pipeline.py -rt 1 ````
 
@@ -46,7 +47,7 @@ The disease outcome prediction pipeline offers two strategies for this task:
 
 ### Disease outcome prediction execution - File ````main.py````:
 
-#### Pipeline parameters:
+#### Pipeline parameters
 	- __-rt__ or __--running_step__ <br>
 		Use to prepare data for the desired scenario: <br>
 		1 - Run graph kernel method <br>
@@ -57,8 +58,8 @@ The disease outcome prediction pipeline offers two strategies for this task:
 		
 		Example of this file: config.json
 		
-#### Input configuration file:
-* The pipeline only needs a configuration file and the number of the method that you want to run.
+#### Input configuration file
+
 - Configuration file keys (see also the example in config.json):
     - **folder** (mandatory for both methods): working directory
     - **identifier**: project identifier to be used in the result files
@@ -71,7 +72,7 @@ The disease outcome prediction pipeline offers two strategies for this task:
     - **edges_enrichment**: Edge attributes to be used in the screening evaluation. It may be a list combining the options "label", "weight" or "all". Examples: ["all", "weight"], ["label"], ["label", "weight"]. Default value is ["all"].
     - **flag_balance**: Flag to indicate whether the user wants to balance the samples in each outcome class, by SMOTE oversampling. Values may be false or true. Default value is false.
 
-* Running modes examples:
+#### Running modes examples
 	1. Running disease outcome prediction by graph kernel method: <br>
 		````python3 main.py -rt 1 -cf config.json````
 
