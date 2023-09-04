@@ -58,7 +58,7 @@ The outcome disease prediction pipeline offers two strategies for this task:
 		Example of this file: config.json
 		
 #### Input configuration file:
-* The pipeline only needs a configuration file and the step number you want to run.
+* The pipeline only needs a configuration file and the number of the method that you want to run.
 - Configuration file keys (see also the example in config.json):
     - **folder** (mandatory for both methods): working directory
     - **identifier**: project identifier to be used in the result files
