@@ -6,7 +6,7 @@ Pipeline that performs a screening of disease outcome prediction evaluations fol
 
 The data preparation pipeline contains tasks for two distinct scenarios: [leukaemia](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE425) that contains microarray data for 119 patients and [ovarian](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE140082) cancer that contains next generation sequencing data for 380 patients.
 
-The outcome disease prediction pipeline offers two strategies for this task:
+The disease outcome prediction pipeline offers two strategies for this task:
 
 **Graph kernel method**: It starts generating personalized networks for each patient using the interactome file provided and generate the patient network checking if each PPI of the interactome has both proteins up regulated or down regulated according to the gene expression table provided. The first step generate a set of graphs for the patients that are evaluated with 4 distinct kernels for graph classification, which are: Linear kernel between edge histograms, Linear kernel between vertex histograms and the Weisfeiler lehman. These kernels functions calculate a similarity matrix for the graphs and then this matrix is used by the support vector machine classifier. Then the predictions are delivered to the last task that exports a report with the accuracy reached by each kernel. It allows some customizations about the network parameters to be used, such as the DEG cutoff to determine up and down regulated based on the log2 fold change, which will determine the topology and the labels distribution in the specific sample graphs. It is also possible customize the type of node/edge attributes passed to the kernel function, which may be only label, only weight or both.
 
@@ -72,10 +72,10 @@ The outcome disease prediction pipeline offers two strategies for this task:
     - **flag_balance**: Flag to indicate whether the user wants to balance the samples in each outcome class, by SMOTE oversampling. Values may be false or true. Default value is false.
 
 * Running modes examples:
-	1. Running outcome disease prediction by graph kernel method: <br>
+	1. Running disease outcome prediction by graph kernel method: <br>
 		````python3 main.py -rt 1 -cf config.json````
 
-	2. Running outcome disease prediction by gsea enriched network method: <br>
+	2. Running disease outcome prediction by gsea enriched network method: <br>
 		````python3 main.py -rt 2 -cf config.json````
 
 ## Reference
