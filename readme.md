@@ -44,7 +44,7 @@ The outcome disease prediction pipeline offers two strategies for this task:
 
 		In this case, you must have [R](https://www.r-project.org/) installed and also the library [DESeq](https://bioconductor.org/packages/release/bioc/html/DESeq.html), because this scenario treats next generation sequencing data
 
-### Outcome disease prediction execution - File ````main.py````:
+### Disease outcome prediction execution - File ````main.py````:
 
 #### Pipeline parameters:
 	- __-rt__ or __--running_step__ <br>
@@ -65,11 +65,11 @@ The outcome disease prediction pipeline offers two strategies for this task:
     - **mask_expression_table** (mandatory for both methods): Gene expression values file with the result of the fold change normalized value of a certain gene for each sample, already pruned by the significance (p-value). 
     - **raw_expression_table** (mandatory for both methods): Raw gene expression values already normalized following the method pf preference of the user.
     - **labels_file** (mandatory for both methods): File with the prognosis label for each sample
-    - **deg_cutoff_up**: Cutoff value to determine up regulated gene
-    - **deg_cutoff_down**: Cutoff value to determine down regulated gene
-    - **nodes_enrichment**: Node attributes to be used in the screening evaluation. It may be a list combining the options "label", "weight" or "all". Examples: ["all", "weight"], ["label"], ["label", "weight"]
-    - **edges_enrichment**: Edge attributes to be used in the screening evaluation. It may be a list combining the options "label", "weight" or "all". Examples: ["all", "weight"], ["label"], ["label", "weight"]
-    - **flag_balance**: Flag to indicate whether the user wants to balance the samples in each outcome class, by SMOTE oversampling. Values may be false or true.
+    - **deg_cutoff_up**: Cutoff value to determine up regulated gene. Default value is 1.
+    - **deg_cutoff_down**: Cutoff value to determine down regulated gene. Default value is -1.
+    - **nodes_enrichment**: Node attributes to be used in the screening evaluation. It may be a list combining the options "label", "weight" or "all". Examples: ["all", "weight"], ["label"], ["label", "weight"]. Default value is ["all"].
+    - **edges_enrichment**: Edge attributes to be used in the screening evaluation. It may be a list combining the options "label", "weight" or "all". Examples: ["all", "weight"], ["label"], ["label", "weight"]. Default value is ["all"].
+    - **flag_balance**: Flag to indicate whether the user wants to balance the samples in each outcome class, by SMOTE oversampling. Values may be false or true. Default value is false.
 
 * Running modes examples:
 	1. Running outcome disease prediction by graph kernel method: <br>
