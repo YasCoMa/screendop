@@ -1,4 +1,7 @@
 import os
+import sys
+import time
+from datetime import datetime
 import pandas as pd
 import statistics as st
 import numpy as np
@@ -16,6 +19,8 @@ if(workflow_path==None):
     
 if(workflow_path[-1]=='/'):
     workflow_path = workflow_path[:-1]
+sys.path.insert(0, workflow_path)
+from utils import process_memory
 
 class Gsea_strategy:
     def __init__(self, folder, flag_balance):
@@ -250,9 +255,37 @@ class Gsea_strategy:
                 print( f"{g} -- {clas} -- Number of proteins that have more than one neighbor {clas}ly correlated: ", len(c))
     
 class Pipeline:
+    def _profile(self, folder, obj, description, call, mask_expr_table_file, raw_expr_table_file, patient_labels_file, flag_balance, list_metrics, grid_results):
+        
+        tbefore = time.time()
+        membefore = process_memory()
+        
+        result = eval( f"obj.{call}" )
+        
+        diffMem = process_memory() - membefore
+        diffTime = time.time() - tbefore
+        timeExec = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
+        
+        with open( f'{folder}/log_execution_details.tsv', 'a') as f:
+            f.write( f"GSEABased\t{description}\t{timeExec}\t{diffTime}\t{diffMem}\n" )
+        
+        return result
+    
     def run(self, folder, mask_expr_table_file, raw_expr_table_file, patient_labels_file, flag_balance):
+        list_metrics = None
+        grid_results = None
+        
+        strflag = 'without balancing'
+        if(flag_balance):
+            strflag = 'with balancing'
+        
         p = Gsea_strategy(folder, flag_balance)
-        p.generate_features_gsea(raw_expr_table_file, patient_labels_file)
-        list_metrics, grid_results = p.train_evaluate()
-        p.report_performance_sim_Matrix_ppi(mask_expr_table_file, raw_expr_table_file, patient_labels_file, list_metrics, grid_results)
+        # p.generate_features_gsea(raw_expr_table_file, patient_labels_file)
+        self._profile(folder, p, 'Step 1 - Generating features', 'generate_features_gsea(raw_expr_table_file, patient_labels_file)', mask_expr_table_file, raw_expr_table_file, patient_labels_file, flag_balance, list_metrics, grid_results)
+        
+        list_metrics, grid_results = self._profile(folder, p, 'Step 2 - Training and performing evaluation', 'train_evaluate()', mask_expr_table_file, raw_expr_table_file, patient_labels_file, flag_balance, list_metrics, grid_results)
+        # list_metrics, grid_results = p.train_evaluate()
+        
+        self._profile(folder, p, 'Step 3 - Calculating correlation matrix and comparing with PPI relation', 'report_performance_sim_Matrix_ppi(mask_expr_table_file, raw_expr_table_file, patient_labels_file, list_metrics, grid_results)', mask_expr_table_file, raw_expr_table_file, patient_labels_file, flag_balance, list_metrics, grid_results)
+        #p.report_performance_sim_Matrix_ppi(mask_expr_table_file, raw_expr_table_file, patient_labels_file, list_metrics, grid_results)
 

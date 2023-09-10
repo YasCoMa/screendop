@@ -82,9 +82,9 @@ class Pipeline_ScreenDOP:
         cuts = {}
         
         i=0
-        vals = [1,-1]
+        vals = [1, -1]
         for op in ['up', 'down']:
-            cuts['up'] = vals[i]
+            cuts[op] = vals[i]
             
             ide = f'deg_cutoff_{op}'
             name = f'Cutoff {op} regulated'
@@ -164,7 +164,11 @@ class Pipeline_ScreenDOP:
                     
                     folder = e['folder']
                     if(folder[-1]=='/'):
-                        folder = workflow_path[:-1]
+                        folder = folder[:-1]
+                        
+                    if( not os.path.isfile(f'{folder}/log_execution_details.tsv') ):
+                        with open( f'{folder}/log_execution_details.tsv', 'w') as f:
+                            f.write( f"strategy\tdescription\tmoment\texecution_time\tmemory_usage\n" )
                     
                     flagop = ( option==0 ) 
                     if( flagop or option==1): # vanilla implementation

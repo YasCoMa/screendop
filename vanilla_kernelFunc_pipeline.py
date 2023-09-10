@@ -1,4 +1,7 @@
 import os
+import sys
+import time
+from datetime import datetime
 import networkx as nx
 
 from sklearn.svm import SVC
@@ -24,6 +27,8 @@ if(workflow_path==None):
     
 if(workflow_path[-1]=='/'):
     workflow_path = workflow_path[:-1]
+sys.path.insert(0, workflow_path)
+from utils import process_memory
 
 # Step 1
 class Generate_personalised_networks:
@@ -466,17 +471,39 @@ class Export_results:
         
 
 class Pipeline:
+    def _profile(self, folder, obj, description, call, mask_expr_table_file, raw_expr_table_file, labels_file, cutoff_up, cutoff_down, nodes_enrich, edges_enrich, identifier, samples, results):
+        
+        tbefore = time.time()
+        membefore = process_memory()
+        
+        result = eval( f"obj.{call}" )
+        
+        diffMem = process_memory() - membefore
+        diffTime = time.time() - tbefore
+        timeExec = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
+        
+        with open( f'{folder}/log_execution_details.tsv', 'a') as f:
+            f.write( f"NetworkBased\t{description}\t{timeExec}\t{diffTime}\t{diffMem}\n" )
+        
+        return result
+        
     def run(self, folder, mask_expr_table_file, raw_expr_table_file, labels_file, cutoff_up, cutoff_down, nodes_enrich, edges_enrich, identifier):
+        samples = None 
+        results = None
+        
         step1 = Generate_personalised_networks(cutoff_up, cutoff_down)
-        step1.make_patients_graph(folder, mask_expr_table_file, raw_expr_table_file )
+        self._profile(folder, step1, 'Step 1 - Personalized sample networks generation', 'make_patients_graph(folder, mask_expr_table_file, raw_expr_table_file )', mask_expr_table_file, raw_expr_table_file, labels_file, cutoff_up, cutoff_down, nodes_enrich, edges_enrich, identifier, samples, results)
+        # step1.make_patients_graph(folder, mask_expr_table_file, raw_expr_table_file )
         
         for ne in nodes_enrich:
             for ee in edges_enrich:
                 print( f'--- Enrichment {ne} and {ee}')
                 step2 = KernelMatrixBasedPrediction(folder, ne, ee, identifier)
                 fout = step2.fout
-                samples, results=step2.execute_classification(folder, labels_file)
+                samples, results = self._profile(folder, step2, f'Step 2 - Execution classification: enrichment nodes with {ne} and edges with {ee}', 'execute_classification(folder, labels_file)', mask_expr_table_file, raw_expr_table_file, labels_file, cutoff_up, cutoff_down, nodes_enrich, edges_enrich, identifier, samples, results)
+                # samples, results=step2.execute_classification(folder, labels_file)
 
                 step3 = Export_results(fout)
-                step3.make_report( folder, samples, results, labels_file)
+                self._profile(folder, step3, f'Step 3 - Exporting results: enrichment nodes with {ne} and edges with {ee}', 'make_report( folder, samples, results, labels_file)', mask_expr_table_file, raw_expr_table_file, labels_file, cutoff_up, cutoff_down, nodes_enrich, edges_enrich, identifier, samples, results)
+                # step3.make_report( folder, samples, results, labels_file)
                 
