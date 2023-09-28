@@ -84,6 +84,7 @@ In this case, you must have [R](https://www.r-project.org/) installed and also t
 	````python3 main.py -rt 2 -cf config.json````
 
 ## Reference
+Martins, Y. C. (2023). Multi-task analysis of gene expression data on cancer public datasets. medRxiv, 2023-09.
 
 ## Bug Report
 Please, use the [Issue](https://github.com/YasCoMa/screendop/issues) tab to report any bug.
